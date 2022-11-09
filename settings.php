@@ -23,13 +23,40 @@
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+use tool_matrix\communication;
+
 defined('MOODLE_INTERNAL') || die();
+
+$communicationdisabled = !communication::is_communication_enabled();
 
 if ($hassiteconfig) {
     $settings = new admin_settingpage('tool_matrix_settings', new lang_string('pluginname', 'tool_matrix'));
 
-    // phpcs:ignore Generic.CodeAnalysis.EmptyStatement.DetectedIf
     if ($ADMIN->fulltree) {
-        // TODO: Define actual plugin settings page and add it to the tree - {@link https://docs.moodle.org/dev/Admin_settings}.
+        // Add an enable subsystem setting to the "Advanced features" settings page.
+        $optionalsubsystems = $ADMIN->locate('optionalsubsystems');
+        $optionalsubsystems->add(new admin_setting_configcheckbox(
+                'enablecommunication',
+                new lang_string('enablecommunication', 'tool_matrix'),
+                new lang_string('enablecommunication_desc', 'tool_matrix'),
+                1,
+                1,
+                0
+        ));
+
+        $ADMIN->add(
+                'tools',
+                new admin_category('matrixcat', get_string('matrixcat', manager::PLUGINNAME), $accessibilitydisabled)
+        );
+
+        $ADMIN->add(
+                'brickfieldfolder',
+                new admin_externalpage(
+                        'tool_brickfield_activation',
+                        get_string('activationform', manager::PLUGINNAME),
+                        manager::registration_url(),
+                        'moodle/site:config'
+                )
+        );
     }
 }

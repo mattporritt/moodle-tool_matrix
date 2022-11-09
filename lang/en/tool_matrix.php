@@ -26,3 +26,5 @@
 defined('MOODLE_INTERNAL') || die();
 
 $string['pluginname'] = 'Matrix Chat';
+$string['enablecommunication'] = 'Enable communication';
+$string['enablecommunication_desc'] = 'Allow advanced communication system integrations.';
