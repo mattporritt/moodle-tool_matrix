@@ -26,5 +26,8 @@
 defined('MOODLE_INTERNAL') || die();
 
 $string['pluginname'] = 'Matrix Chat';
+$string['communicationscat'] = 'Communication Settings';
 $string['enablecommunication'] = 'Enable communication';
 $string['enablecommunication_desc'] = 'Allow advanced communication system integrations.';
+$string['serverurl'] = 'Matrix server URL';
+$string['serverurl_desc'] = 'The URL of the Matrix server, can include port. e.g. https://synapse.local:8008/';

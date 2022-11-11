@@ -26,11 +26,16 @@
 use tool_matrix\communication;
 
 defined('MOODLE_INTERNAL') || die();
-
 $communicationdisabled = !communication::is_communication_enabled();
 
 if ($hassiteconfig) {
-    $settings = new admin_settingpage('tool_matrix_settings', new lang_string('pluginname', 'tool_matrix'));
+
+    // Set up the category and settings page under Admin tools.
+    $ADMIN->add(
+            'tools',
+            new admin_category('communicationscat', get_string('communicationscat', 'tool_matrix'), $communicationdisabled)
+    );
+    $settingspage = new admin_settingpage('tool_matrix_settings', new lang_string('pluginname', 'tool_matrix'));
 
     if ($ADMIN->fulltree) {
         // Add an enable subsystem setting to the "Advanced features" settings page.
@@ -44,19 +49,21 @@ if ($hassiteconfig) {
                 0
         ));
 
-        $ADMIN->add(
-                'tools',
-                new admin_category('matrixcat', get_string('matrixcat', manager::PLUGINNAME), $accessibilitydisabled)
-        );
+        $settingspage->add(new admin_setting_configtext(
+                'tool_matrix/serverurl',
+                new lang_string('serverurl', 'tool_matrix'),
+                new lang_string('serverurl_desc', 'tool_matrix'),
+                '',
+                PARAM_RAW_TRIMMED // This doesn't feel correct.
+        ));
 
-        $ADMIN->add(
-                'brickfieldfolder',
-                new admin_externalpage(
-                        'tool_brickfield_activation',
-                        get_string('activationform', manager::PLUGINNAME),
-                        manager::registration_url(),
-                        'moodle/site:config'
-                )
-        );
+        $settingspage->add(new admin_setting_configtext(
+                'tool_matrix/serveruser'
+        ));
+
+        $settingspage->add(new admin_setting_configpasswordunmask());
+
     }
+
+    $ADMIN->add('communicationscat', $settingspage);
 }
