@@ -35,7 +35,20 @@ if ($hassiteconfig) {
             'tools',
             new admin_category('communicationscat', get_string('communicationscat', 'tool_matrix'), $communicationdisabled)
     );
-    $settingspage = new admin_settingpage('tool_matrix_settings', new lang_string('pluginname', 'tool_matrix'));
+
+    // Matrix server settings page.
+    $settingspage = new admin_settingpage('tool_matrix_settings', new lang_string('settings', 'tool_matrix'));
+
+    // Test function page. Only here for some development testing.
+    $ADMIN->add(
+            'communicationscat',
+            new admin_externalpage(
+                    'tool_matrix_testpage',
+                    get_string('testpage', 'tool_matrix'),
+                    '/admin/tool/matrix/test.php', // Yes, this is not the correct way to so this.
+                    'moodle/site:config'
+            )
+    );
 
     if ($ADMIN->fulltree) {
         // Add an enable subsystem setting to the "Advanced features" settings page.
@@ -49,6 +62,7 @@ if ($hassiteconfig) {
                 0
         ));
 
+        // Matrix server settings.
         $settingspage->add(new admin_setting_configtext(
                 'tool_matrix/serverurl',
                 new lang_string('serverurl', 'tool_matrix'),
@@ -58,10 +72,38 @@ if ($hassiteconfig) {
         ));
 
         $settingspage->add(new admin_setting_configtext(
-                'tool_matrix/serveruser'
+                'tool_matrix/serveruser',
+                new lang_string('serveruser', 'tool_matrix'),
+                new lang_string('serveruser_desc', 'tool_matrix'),
+                '',
+                PARAM_RAW_TRIMMED
         ));
 
-        $settingspage->add(new admin_setting_configpasswordunmask());
+        $settingspage->add(new admin_setting_configpasswordunmask(
+                'tool_matrix/serverpass',
+                new lang_string('serverpass', 'tool_matrix'),
+                new lang_string('serverpass_desc', 'tool_matrix'),
+                '',
+                PARAM_RAW_TRIMMED
+        ));
+
+        $settingspage->add(new admin_setting_configcheckbox(
+                'tool_matrix/createusers',
+                new lang_string('createusers', 'tool_matrix'),
+                new lang_string('createusers_desc', 'tool_matrix'),
+                0,
+                1,
+                0
+        ));
+
+        $settingspage->add(new admin_setting_configcheckbox(
+                'tool_matrix/hassso',
+                new lang_string('hassso', 'tool_matrix'),
+                new lang_string('hassso_desc', 'tool_matrix'),
+                0,
+                1,
+                0
+        ));
 
     }
 

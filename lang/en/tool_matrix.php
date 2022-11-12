@@ -27,7 +27,17 @@ defined('MOODLE_INTERNAL') || die();
 
 $string['pluginname'] = 'Matrix Chat';
 $string['communicationscat'] = 'Communication Settings';
+$string['createusers'] = 'Create users in Matrix';
+$string['createusers_desc'] = 'Create users in Matrix for Moodle accounts.';
 $string['enablecommunication'] = 'Enable communication';
 $string['enablecommunication_desc'] = 'Allow advanced communication system integrations.';
+$string['hassso'] = 'Users login via SSO';
+$string['hassso_desc'] = 'Users log into Matrix and Moodle via an existing SSO workflow.';
+$string['serverpass'] = 'Admin password';
+$string['serverpass_desc'] = 'The users password';
 $string['serverurl'] = 'Matrix server URL';
 $string['serverurl_desc'] = 'The URL of the Matrix server, can include port. e.g. https://synapse.local:8008/';
+$string['serveruser'] = 'Admin username';
+$string['serveruser_desc'] = 'The username of an account on the Matrix server that has administrative privilages';
+$string['pluginname'] = 'Matrix chat settings';
+$string['testpage'] = 'Matrix test page';
